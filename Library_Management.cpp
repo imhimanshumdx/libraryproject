@@ -4,6 +4,32 @@ using namespace std;
 
 class Book;
 
+class Date {
+private:
+    int day;
+    int month;
+    int year;
+public:
+    Date(int dd,int mm,int yy) 
+    {
+        day = dd;
+        month = mm;
+        year = yy;
+    }
+    void setDueDate(Date date)
+    {
+        this->day = date.day;
+        this->month = date.month;
+        this->year = date.year;
+    }
+
+    Date getDueDate()
+    {
+        return Date(this->day,this->month,this->year);
+    }
+    
+};
+
 class Person {
 
 protected:
@@ -57,6 +83,9 @@ public:
         email = newEmail;
     }
 };
+
+
+
 
 int main()
 {
