@@ -2,9 +2,44 @@
 using namespace std;
 
 class Person {
+
 protected:
-    std::string name;
-    std::string address;
-    std::string email;
+
+    string name;
+    string address;
+    string email;
+
+public:
     
+    void setName (const string& newName) {
+        name = newName;
+    }
+
+    void setEmail (const string& newEmail) {
+        email = newEmail;
+    }
+
+    void setAddress (const string& newAddress) {
+        address = newAddress;
+    }
+
+    string getAddress() const {
+        return address;
+    }
+
+    string getEmail() const {
+        return email;
+    }
+
+    string getName() const {
+        return name;
+    }
+
+    
+
 };
+
+int main()
+{
+
+}
