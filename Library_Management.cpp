@@ -1,5 +1,8 @@
 #include<iostream>
+#include <vector>
 using namespace std;
+
+class Book;
 
 class Person {
 
@@ -39,7 +42,23 @@ public:
 
 };
 
+class Member : public Person {
+    
+private:
+    int memberID;
+    std::vector<Book> booksLoaned;
+
+public:
+    Member(int memID, string newName, string newAddress, string newEmail)
+    {
+        memberID = memID;
+        name = newName;
+        address = newAddress;
+        email = newEmail;
+    }
+};
+
 int main()
 {
-
+    return 0;
 }
