@@ -46,7 +46,7 @@ class Member : public Person {
     
 private:
     int memberID;
-    std::vector<Book> booksLoaned;
+    //std::vector<Book> booksLoaned;
 
 public:
     Member(int memID, string newName, string newAddress, string newEmail)
