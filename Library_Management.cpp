@@ -43,6 +43,22 @@ public:
             date.year = date.year++;
         }
     }
+
+    int getDay(Date date)
+    {
+        return date.day;
+    }
+
+    int getMonth(Date date)
+    {
+        return date.month;
+    }
+
+    int getYear(Date date)
+    {
+        return date.year;
+    }
+
 };
 
 class Person
