@@ -190,6 +190,7 @@ public:
         borrower = newBorrower;
         dueDate = newDueDate;
     }
+
 };
 
 class Librarian : public Person
@@ -299,6 +300,7 @@ public:
             Date dueDate = currentDate;
             dueDate.setDueDate(dueDate);
             book->borrowBook(borrower, dueDate);
+            borrower->setBooksBorrowed(*book);
             cout << "Book Issued Successfully:" << endl;
             cout << "Book ID: " << book->getBookID() << endl;
             cout << "Book Name: " << book->getBookName() << endl;
