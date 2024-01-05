@@ -125,8 +125,30 @@ public:
         salary = newSalary;
     }
 
-};
+    void addMember() {
+        int memberID;
+        string memberName, memberAddress, memberEmail;
+        cout << "Enter Member ID: ";
+        cin >> memberID;
+        cin.ignore();
+        cout << "Enter Member Name: ";
+        getline(cin, memberName);
+        cout << "Enter Member Address: ";
+        getline(cin, memberAddress);
+        cout << "Enter Member Email: ";
+        getline(cin, memberEmail);
 
+        Member newMember(memberID, memberName, memberAddress, memberEmail);
+        
+        cout << "New Member Details:" << endl;
+        cout << "Member ID: " << newMember.getMemberID() << endl;
+        cout << "Name: " << newMember.getName() << endl;
+        cout << "Address: " << newMember.getAddress() << endl;
+        cout << "Email: " << newMember.getEmail() << endl;
+    }
+
+    
+};
 
 class Book {
 private:
