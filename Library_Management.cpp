@@ -74,7 +74,7 @@ class Member : public Person {
     
 private:
     int memberID;
-    //std::vector<Book> booksLoaned;
+    vector<Book> booksLoaned;
 
 public:
     Member(int memID, string newName, string newAddress, string newEmail)
@@ -83,6 +83,17 @@ public:
         name = newName;
         address = newAddress;
         email = newEmail;
+    }
+    int getMemberID() {
+        return memberID;
+    }
+
+    vector<Book> getBooksBorrowed()  {
+        return booksLoaned;
+    }
+
+    void setBooksBorrowed (Book& book) {
+        booksLoaned.push_back(book);
     }
 };
 
