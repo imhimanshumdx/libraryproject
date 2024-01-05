@@ -18,7 +18,7 @@ public:
         month = mm;
         year = yy;
     }
-    
+
     void setDueDate(Date &date)
     {
         date.day = date.day + 3;
@@ -108,60 +108,6 @@ public:
     }
 };
 
-class Librarian : public Person {
-private:
-    int staffID;
-    int salary;
-
-public:
-    Librarian (int id, string newName, string newAddress, string newEmail, int newSalary) {
-        staffID = id;
-        name = newName;
-        address = newAddress;
-        email = newEmail;
-        salary = newSalary;
-    }
-
-    int getStaffID() {
-        return staffID;
-    }
-
-    int getSalary () {
-        return salary;
-    }
-    
-    void setStaffID (int newStaffID) {
-        staffID = newStaffID;
-    }
-
-    void setSalary (int newSalary) {
-        salary = newSalary;
-    }
-
-    void addMember() {
-        int memberID;
-        string memberName, memberAddress, memberEmail;
-        cout << "Enter Member ID: ";
-        cin >> memberID;
-        cin.ignore();
-        cout << "Enter Member Name: ";
-        getline(cin, memberName);
-        cout << "Enter Member Address: ";
-        getline(cin, memberAddress);
-        cout << "Enter Member Email: ";
-        getline(cin, memberEmail);
-
-        Member newMember(memberID, memberName, memberAddress, memberEmail);
-
-        cout << "New Member Details:" << endl;
-        cout << "Member ID: " << newMember.getMemberID() << endl;
-        cout << "Name: " << newMember.getName() << endl;
-        cout << "Address: " << newMember.getAddress() << endl;
-        cout << "Email: " << newMember.getEmail() << endl;
-    }
-
-};
-
 class Book {
 private:
     int bookID;
@@ -215,8 +161,106 @@ public:
 
 };
 
+class Librarian : public Person {
+private:
+    int staffID;
+    int salary;
+    vector<Member> members;
+    vector<Book> books;
+    Member* findMemberById(int memberID) {
+        for (auto& member : members) {
+            if (member.getMemberID() == memberID) {
+                return &member;
+            }
+        }
+        return nullptr;
+    }
 
-int main()
-{
+    Book* findBookById(int bookID) {
+        for (auto& book : books) {
+            if (book.getBookID() == bookID) {
+                return &book;
+            }
+        }
+        return nullptr;
+    }
+
+public:
+    Librarian (int id, string newName, string newAddress, string newEmail, int newSalary) {
+        staffID = id;
+        name = newName;
+        address = newAddress;
+        email = newEmail;
+        salary = newSalary;
+        Book book = Book(1,"a","b","c");
+        books.push_back(book);
+    }
+
+    int getStaffID() {
+        return staffID;
+    }
+
+    int getSalary () {
+        return salary;
+    }
+    
+    void setStaffID (int newStaffID) {
+        staffID = newStaffID;
+    }
+
+    void setSalary (int newSalary) {
+        salary = newSalary;
+    }
+
+    void addMember() {
+        int memberID;
+        string memberName, memberAddress, memberEmail;
+        cout << "Enter Member ID: ";
+        cin >> memberID;
+        cin.ignore();
+        cout << "Enter Member Name: ";
+        getline(cin, memberName);
+        cout << "Enter Member Address: ";
+        getline(cin, memberAddress);
+        cout << "Enter Member Email: ";
+        getline(cin, memberEmail);
+
+        Member newMember(memberID, memberName, memberAddress, memberEmail);
+
+        cout << "New Member Details:" << endl;
+        cout << "Member ID: " << newMember.getMemberID() << endl;
+        cout << "Name: " << newMember.getName() << endl;
+        cout << "Address: " << newMember.getAddress() << endl;
+        cout << "Email: " << newMember.getEmail() << endl;
+    }
+
+    void issueBook(int memberID, int bookID) {
+        Member* borrower = findMemberById(memberID);
+        Book* book = findBookById(bookID);
+
+        if (borrower != nullptr && book != nullptr) {
+            Date currentDate = Date(12, 12, 2025);
+            Date dueDate = currentDate;
+            dueDate.setDueDate(dueDate);
+            book->borrowBook(borrower, dueDate);
+            cout << "Book Issued Successfully:" << endl;
+            cout << "Book ID: " << book->getBookID() << endl;
+            cout << "Book Name: " << book->getBookName() << endl;
+            cout << "Borrower: " << borrower->getName() << endl;
+        } else {
+            cout << "Member or Book not found with the provided IDs." << endl;
+        }
+    }
+};
+
+
+
+int main() {
+    Librarian librarian(1, "Librarian", "Librarian", "librarian@email.com", 50000);
+
+    librarian.addMember();
+
+    librarian.issueBook(1, 1);
+
     return 0;
 }
