@@ -58,7 +58,6 @@ public:
     {
         return date.year;
     }
-
 };
 
 class Person
@@ -361,6 +360,44 @@ public:
             else
             {
                 cout << "No books borrowed by this member." << endl;
+            }
+        }
+        else
+        {
+            cout << "Member not found with the provided ID." << endl;
+        }
+    }
+
+    void calcFine(int memberID)
+    {
+        Member *borrower = findMemberById(memberID);
+
+        if (borrower != nullptr)
+        {
+            vector<Book> &booksLoaned = borrower->getBooksBorrowed();
+            int totalFine = 0;
+
+            for (auto &book : booksLoaned)
+            {
+                Date currentDate = Date(12, 12, 2025);
+                Date dueDate = book.getDueDate();
+
+                if (currentDate.getDay(currentDate) > dueDate.getDay(dueDate) || currentDate.getMonth(currentDate) > dueDate.getMonth(dueDate) || currentDate.getYear(currentDate) > dueDate.getYear(dueDate))
+                {
+                    int fineDays = (currentDate.getYear(currentDate)  - dueDate.getYear(dueDate)) * 365 + (currentDate.getMonth(currentDate) - dueDate.getMonth(dueDate)) * 30 + (currentDate.getDay(currentDate) - dueDate.getDay(dueDate));
+                    int fine = fineDays * 1;
+                    cout << "Fine for Book ID " << book.getBookID() << ": " << fine << " units" << endl;
+                    totalFine += fine;
+                }
+            }
+
+            if (totalFine > 0)
+            {
+                cout << "Total Fine for Member ID " << borrower->getMemberID() << ": " << totalFine << " units" << endl;
+            }
+            else
+            {
+                cout << "No fines for this member." << endl;
             }
         }
         else
