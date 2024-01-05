@@ -18,16 +18,29 @@ public:
         month = mm;
         year = yy;
     }
-    void setDueDate(Date date)
+    
+    void setDueDate(Date &date)
     {
-        this->day = date.day;
-        this->month = date.month;
-        this->year = date.year;
+        date.day = date.day + 3;
+        date.month = date.month;
+        date.year = date.year;
+        if(date.month > 12 || date.day > 31)
+        {
+            fixDate(date);
+        }
     }
 
-    Date getDueDate()
+    void fixDate(Date& date)
     {
-        return Date(this->day,this->month,this->year);
+        if(date.day > 31)
+        {
+            date.day = date.day - 31;
+            date.month = date.month + 1;
+        }
+        if(date.month > 12)
+        {
+            date.year = date.year++;
+        }
     }
     
 };
@@ -139,7 +152,7 @@ public:
         getline(cin, memberEmail);
 
         Member newMember(memberID, memberName, memberAddress, memberEmail);
-        
+
         cout << "New Member Details:" << endl;
         cout << "Member ID: " << newMember.getMemberID() << endl;
         cout << "Name: " << newMember.getName() << endl;
@@ -147,7 +160,6 @@ public:
         cout << "Email: " << newMember.getEmail() << endl;
     }
 
-    
 };
 
 class Book {
