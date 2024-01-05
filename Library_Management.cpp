@@ -66,8 +66,6 @@ public:
         return name;
     }
 
-    
-
 };
 
 class Member : public Person {
@@ -96,6 +94,39 @@ public:
         booksLoaned.push_back(book);
     }
 };
+
+class Librarian : public Person {
+private:
+    int staffID;
+    int salary;
+
+public:
+    Librarian (int id, string newName, string newAddress, string newEmail, int newSalary) {
+        staffID = id;
+        name = newName;
+        address = newAddress;
+        email = newEmail;
+        salary = newSalary;
+    }
+
+    int getStaffID() {
+        return staffID;
+    }
+
+    int getSalary () {
+        return salary;
+    }
+    
+    void setStaffID (int newStaffID) {
+        staffID = newStaffID;
+    }
+
+    void setSalary (int newSalary) {
+        salary = newSalary;
+    }
+
+};
+
 
 class Book {
 private:
