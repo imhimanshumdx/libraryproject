@@ -226,6 +226,7 @@ public:
         getline(cin, memberEmail);
 
         Member newMember(memberID, memberName, memberAddress, memberEmail);
+        members.push_back(newMember);
 
         cout << "New Member Details:" << endl;
         cout << "Member ID: " << newMember.getMemberID() << endl;
