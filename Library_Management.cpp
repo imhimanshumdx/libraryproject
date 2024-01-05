@@ -231,8 +231,17 @@ public:
         address = newAddress;
         email = newEmail;
         salary = newSalary;
-        Book book = Book(1, "a", "b", "c");
-        books.push_back(book);
+        Book book1 = Book(1, "Science ficƟon", "firstName", "lastName");
+        Book book2 = Book(2, "Satire", "firstName", "lastName");
+        Book book3 = Book(3, "Drama", "firstName", "lastName");
+        Book book4 = Book(4, "Action and Adventure", "firstName", "lastName");
+        Book book5 = Book(5, "Romance", "firstName", "lastName");
+
+        books.push_back(book1);
+        books.push_back(book2);
+        books.push_back(book3);
+        books.push_back(book4);
+        books.push_back(book5);
     }
 
     int getStaffID()
@@ -411,9 +420,64 @@ int main()
 {
     Librarian librarian(1, "Librarian", "Librarian", "librarian@email.com", 50000);
 
-    librarian.addMember();
+    int choice;
+    do
+    {
+        cout << "\nLibrary Management System Menu:\n";
+        cout << "1. Add Member\n";
+        cout << "2. Issue Book\n";
+        cout << "3. Return Book\n";
+        cout << "4. Display Borrowed Books\n";
+        cout << "5. Calculate Fine\n";
+        cout << "6. Exit\n";
+        cout << "Enter your choice (1-6): ";
+        cin >> choice;
 
-    librarian.issueBook(1, 1);
+        switch (choice)
+        {
+        case 1:
+            librarian.addMember();
+            break;
+
+        case 2:
+            int memberID, bookID;
+            cout << "Enter Member ID: ";
+            cin >> memberID;
+            cout << "Enter Book ID: ";
+            cin >> bookID;
+            librarian.issueBook(memberID, bookID);
+            break;
+
+        case 3:
+            cout << "Enter Member ID: ";
+            cin >> memberID;
+            cout << "Enter Book ID: ";
+            cin >> bookID;
+            librarian.returnBook(memberID, bookID);
+            break;
+
+        case 4:
+            cout << "Enter Member ID: ";
+            cin >> memberID;
+            librarian.displayBorrowedBooks(memberID);
+            break;
+
+        case 5:
+            cout << "Enter Member ID: ";
+            cin >> memberID;
+            librarian.calcFine(memberID);
+            break;
+
+        case 6:
+            cout << "Exiting program. Goodbye!\n";
+            break;
+
+        default:
+            cout << "Invalid choice. Please enter a number between 1 and 6.\n";
+            break;
+        }
+
+    } while (choice != 6);
 
     return 0;
 }
