@@ -282,11 +282,10 @@ public:
         Member newMember(memberID, memberName, memberAddress, memberEmail);
         members.push_back(newMember);
 
-        cout << "New Member Details:" << endl;
-        cout << "Member ID: " << newMember.getMemberID() << endl;
-        cout << "Name: " << newMember.getName() << endl;
-        cout << "Address: " << newMember.getAddress() << endl;
-        cout << "Email: " << newMember.getEmail() << endl;
+        cout << "Member Added Successfully" << endl;
+        cout << "Member ID: " << newMember.getMemberID();
+        cout << "   Name: " << newMember.getName();
+        
     }
 
     void issueBook(int memberID, int bookID)
@@ -302,9 +301,9 @@ public:
             book->borrowBook(borrower, dueDate);
             borrower->setBooksBorrowed(*book);
             cout << "Book Issued Successfully:" << endl;
-            cout << "Book ID: " << book->getBookID() << endl;
-            cout << "Book Name: " << book->getBookName() << endl;
-            cout << "Borrower: " << borrower->getName() << endl;
+            cout << "Book ID: " << book->getBookID();
+            cout << "    Book Name: " << book->getBookName();
+            cout << "    Borrower: " << borrower->getName() << endl;
         }
         else
         {
@@ -331,9 +330,9 @@ public:
                     book->returnBook();
 
                     cout << "Book Returned Successfully:" << endl;
-                    cout << "Book ID: " << book->getBookID() << endl;
-                    cout << "Book Name: " << book->getBookName() << endl;
-                    cout << "Returned by: " << borrower->getName() << endl;
+                    cout << "Book ID: " << book->getBookID();
+                    cout << "    Book Name: " << book->getBookName();
+                    cout << "    Returned by: " << borrower->getName() << endl;
 
                     bookFound = true;
                     break;
@@ -425,6 +424,7 @@ int main()
     int choice;
     do
     {
+        
         cout << "\nLibrary Management System Menu:\n";
         cout << "1. Add Member\n";
         cout << "2. Issue Book\n";
@@ -433,6 +433,7 @@ int main()
         cout << "5. Calculate Fine\n";
         cout << "6. Exit\n";
         cout << "Enter your choice (1-6): ";
+
         cin >> choice;
 
         switch (choice)
