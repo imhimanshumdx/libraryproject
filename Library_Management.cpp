@@ -5,10 +5,12 @@ using namespace std;
 class Book;
 
 class Date {
+
 private:
     int day;
     int month;
     int year;
+
 public:
     Date(int dd,int mm,int yy) 
     {
@@ -40,27 +42,27 @@ protected:
 
 public:
     
-    void setName (const string& newName) {
+    void setName ( string& newName) {
         name = newName;
     }
 
-    void setEmail (const string& newEmail) {
+    void setEmail (string& newEmail) {
         email = newEmail;
     }
 
-    void setAddress (const string& newAddress) {
+    void setAddress (string& newAddress) {
         address = newAddress;
     }
 
-    string getAddress() const {
+    string getAddress()  {
         return address;
     }
 
-    string getEmail() const {
+    string getEmail()  {
         return email;
     }
 
-    string getName() const {
+    string getName()  {
         return name;
     }
 
@@ -84,7 +86,58 @@ public:
     }
 };
 
+class Book {
+private:
+    int bookID;
+    string bookName;
+    string authorFirstName;
+    string authorLastName;
+    string bookType;
+    Date dueDate = Date(12,12,2025);
+    Member* borrower;
+    
+public:
+    Book (int id, string name, string firstName, string lastName) 
+    {
+        bookID = id;
+        bookName = name;
+        authorFirstName = firstName;
+        lastName = authorFirstName;
+    }
+    int getBookID() {
+        return bookID;
+    }
 
+    string getBookName(){
+        return bookName;
+    }
+
+    string getAuthorFirstName() {
+        return authorFirstName;
+    }
+
+    string getAuthorLastName() {
+        return authorLastName;
+    }
+
+    Date getDueDate() {
+        return dueDate;
+    }
+
+    void setDueDate(Date& newDueDate) {
+        dueDate = newDueDate;
+    }
+
+    void returnBook() {
+        borrower = nullptr;
+    }
+
+    void borrowBook(Member* newBorrower, Date& newDueDate) {
+        borrower = newBorrower;
+        dueDate = newDueDate;
+    }
+
+};
 
 
 int main()
