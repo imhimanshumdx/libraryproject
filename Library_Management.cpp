@@ -105,7 +105,7 @@ public:
         return memberID;
     }
 
-    vector<Book>& getBooksBorrowed()
+    vector<Book> &getBooksBorrowed()
     {
         return booksLoaned;
     }
@@ -301,7 +301,7 @@ public:
                 if (it->getBookID() == bookID)
                 {
                     booksLoaned.erase(it);
-                    
+
                     book->returnBook();
 
                     cout << "Book Returned Successfully:" << endl;
@@ -322,6 +322,34 @@ public:
         else
         {
             cout << "Member or Book not found with the provided IDs." << endl;
+        }
+    }
+
+    void displayBorrowedBooks(int memberID)
+    {
+        Member *borrower = findMemberById(memberID);
+
+        if (borrower != nullptr)
+        {
+            vector<Book> &booksLoaned = borrower->getBooksBorrowed();
+
+            cout << "Borrowed Books by Member ID " << borrower->getMemberID() << ":" << endl;
+
+            if (!booksLoaned.empty())
+            {
+                for (auto &book : booksLoaned)
+                {
+                    cout << "Book ID: " << book.getBookID() << ", Book Name: " << book.getBookName() << endl;
+                }
+            }
+            else
+            {
+                cout << "No books borrowed by this member." << endl;
+            }
+        }
+        else
+        {
+            cout << "Member not found with the provided ID." << endl;
         }
     }
 };
