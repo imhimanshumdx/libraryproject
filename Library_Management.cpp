@@ -150,6 +150,16 @@ public:
         authorFirstName = firstName;
         authorLastName = lastName;
     }
+
+    Book(int id, string name, string firstName, string lastName, string type)
+    {
+        bookID = id;
+        bookName = name;
+        authorFirstName = firstName;
+        authorLastName = lastName;
+        bookType = type;
+    }
+
     int getBookID()
     {
         return bookID;
