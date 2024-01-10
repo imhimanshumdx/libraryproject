@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <fstream>
+#include <sstream>
 using namespace std;
 
 class Book;
@@ -242,17 +244,55 @@ public:
         address = newAddress;
         email = newEmail;
         salary = newSalary;
-        Book book1 = Book(1, "Science ficƟon", "firstName", "lastName");
-        Book book2 = Book(2, "Satire", "firstName", "lastName");
-        Book book3 = Book(3, "Drama", "firstName", "lastName");
-        Book book4 = Book(4, "Action and Adventure", "firstName", "lastName");
-        Book book5 = Book(5, "Romance", "firstName", "lastName");
+        readBooksFromCSV("library_books.csv");
+    }
 
-        books.push_back(book1);
-        books.push_back(book2);
-        books.push_back(book3);
-        books.push_back(book4);
-        books.push_back(book5);
+     void readBooksFromCSV(const string &filename)
+    {
+        ifstream file(filename);
+        if (!file.is_open())
+        {
+            cout << "Error opening file: " << filename << endl;
+            return;
+        }
+
+        string line;
+        getline(file, line);
+
+        while (getline(file, line))
+        {
+            istringstream iss(line);
+            string token;
+            vector<string> tokens;
+
+            while (getline(iss, token, ','))
+            {
+                tokens.push_back(token);
+            }
+
+            if (tokens.size() == 6)
+            {
+                int id = stoi(tokens[0]);
+                string name = tokens[1];
+                string firstName = tokens[3];
+                string lastName = tokens[4];
+                string type = tokens[5];
+
+                Book newBook(id, name, firstName, lastName, type);
+                books.push_back(newBook);
+            }
+            else
+            {
+                cout << "Error reading line from file: " << line << endl;
+            }
+        }
+
+        file.close();
+    }
+
+    vector<Book> getBooks() const
+    {
+        return books;
     }
 
     int getStaffID()
@@ -441,8 +481,9 @@ int main()
         cout << "3. Return Book\n";
         cout << "4. Display Borrowed Books\n";
         cout << "5. Calculate Fine\n";
-        cout << "6. Exit\n";
-        cout << "Enter your choice (1-6): ";
+        cout << "6. Display All Books\n";
+        cout << "7. Exit\n";
+        cout << "Enter your choice (1-7): ";
 
         cin >> choice;
 
@@ -475,13 +516,21 @@ int main()
             librarian.displayBorrowedBooks(memberID);
             break;
 
+        case 6:
+            for (auto &book : librarian.getBooks())
+            {
+                cout << "Book ID: " << book.getBookID() << ", Book Name: " << book.getBookName() << ", Author: "
+                     << book.getAuthorFirstName() << " " << book.getAuthorLastName() << endl;
+            }
+            break;
+
         case 5:
             cout << "Enter Member ID: ";
             cin >> memberID;
             librarian.calcFine(memberID);
             break;
 
-        case 6:
+        case 7:
             cout << "Exiting program. Goodbye!\n";
             break;
 
