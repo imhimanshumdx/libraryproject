@@ -600,7 +600,7 @@ int main()
             break;
 
         default:
-            cout << "Invalid choice. Please enter a number between 1 and 6.\n";
+            cout << "Invalid choice. Please enter a number between 1 and 7.\n";
             break;
         }
 
