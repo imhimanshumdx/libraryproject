@@ -2,7 +2,61 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+
 using namespace std;
+
+enum class BookType {
+    Unknown = -1,  
+    Guide = 0,
+    Journals = 1,
+    Diaries = 2,
+    Drama = 3,
+    ScienceFiction = 4,
+    Art = 5,
+    Romance = 6,
+    History = 7,
+    ActionAndAdventure = 8,
+    Satire = 9,
+    Mystery = 10,
+    Fantasy = 11,
+    Horror = 12,
+    Comics = 13,
+    Science = 14,
+    Health = 15
+};
+
+struct BookTypeMapping {
+    const char* str;
+    BookType type;
+};
+
+BookTypeMapping bookTypeMappings[] = {
+    {"guide", BookType::Guide},
+    {"journals", BookType::Journals},
+    {"diaries", BookType::Diaries},
+    {"drama", BookType::Drama},
+    {"science fiction", BookType::ScienceFiction},
+    {"art", BookType::Art},
+    {"romance", BookType::Romance},
+    {"history", BookType::History},
+    {"action and adventure", BookType::ActionAndAdventure},
+    {"satire", BookType::Satire},
+    {"mystery", BookType::Mystery},
+    {"fantasy", BookType::Fantasy},
+    {"horror", BookType::Horror},
+    {"comics", BookType::Comics},
+    {"science", BookType::Science},
+    {"health", BookType::Health}
+};
+
+BookType stringToBookType(const std::string& str) {
+    for (const auto& mapping : bookTypeMappings) {
+        if (str == mapping.str) {
+            return mapping.type;
+        }
+    }
+    return BookType::Unknown;
+}
 
 class Book;
 
@@ -140,26 +194,30 @@ private:
     string bookName;
     string authorFirstName;
     string authorLastName;
-    string bookType;
+    BookType bookType;
     Date dueDate = Date(12, 12, 2025);
     Member *borrower;
+    int pageCount;
 
 public:
-    Book(int id, string name, string firstName, string lastName)
-    {
-        bookID = id;
-        bookName = name;
-        authorFirstName = firstName;
-        authorLastName = lastName;
-    }
-
-    Book(int id, string name, string firstName, string lastName, string type)
+    Book(int id, string name, int pages, string firstName, string lastName, BookType type)
     {
         bookID = id;
         bookName = name;
         authorFirstName = firstName;
         authorLastName = lastName;
         bookType = type;
+        pageCount = pages;
+    }
+
+    void setPageCount(int count)
+    {
+        pageCount = count;
+    }
+
+    int getPageCount()
+    {
+        return pageCount;
     }
 
     int getBookID()
@@ -202,7 +260,6 @@ public:
         borrower = newBorrower;
         dueDate = newDueDate;
     }
-
 };
 
 class Librarian : public Person
@@ -247,7 +304,7 @@ public:
         readBooksFromCSV("library_books.csv");
     }
 
-     void readBooksFromCSV(const string &filename)
+    void readBooksFromCSV(const string &filename)
     {
         ifstream file(filename);
         if (!file.is_open())
@@ -274,11 +331,20 @@ public:
             {
                 int id = stoi(tokens[0]);
                 string name = tokens[1];
+                int pageCount = stoi(tokens[2]);
                 string firstName = tokens[3];
                 string lastName = tokens[4];
-                string type = tokens[5];
+                BookType type;
+                try
+                {
+                    BookType type = static_cast<BookType>(stoi(tokens[5]));
+                }
+                catch (const std::exception &e)
+                {
+                    cout << "Error converting string to integer for BookType: " << e.what() << endl;
+                }
 
-                Book newBook(id, name, firstName, lastName, type);
+                Book newBook(id, name, pageCount, firstName, lastName, type);
                 books.push_back(newBook);
             }
             else
@@ -335,7 +401,6 @@ public:
         cout << "Member Added Successfully" << endl;
         cout << "Member ID: " << newMember.getMemberID();
         cout << "   Name: " << newMember.getName();
-        
     }
 
     void issueBook(int memberID, int bookID)
@@ -444,7 +509,7 @@ public:
 
                 if (currentDate.getDay(currentDate) > dueDate.getDay(dueDate) || currentDate.getMonth(currentDate) > dueDate.getMonth(dueDate) || currentDate.getYear(currentDate) > dueDate.getYear(dueDate))
                 {
-                    int fineDays = (currentDate.getYear(currentDate)  - dueDate.getYear(dueDate)) * 365 + (currentDate.getMonth(currentDate) - dueDate.getMonth(dueDate)) * 30 + (currentDate.getDay(currentDate) - dueDate.getDay(dueDate));
+                    int fineDays = (currentDate.getYear(currentDate) - dueDate.getYear(dueDate)) * 365 + (currentDate.getMonth(currentDate) - dueDate.getMonth(dueDate)) * 30 + (currentDate.getDay(currentDate) - dueDate.getDay(dueDate));
                     int fine = fineDays * 1;
                     cout << "Fine for Book ID " << book.getBookID() << ": " << fine << " units" << endl;
                     totalFine += fine;
@@ -474,7 +539,7 @@ int main()
     int choice;
     do
     {
-        
+
         cout << "\nLibrary Management System Menu:\n";
         cout << "1. Add Member\n";
         cout << "2. Issue Book\n";
@@ -539,7 +604,7 @@ int main()
             break;
         }
 
-    } while (choice != 6);
+    } while (choice != 7);
 
     return 0;
 }
