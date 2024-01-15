@@ -27,7 +27,7 @@ add_executable(tests
 )
 
 # Include the directory containing catch.hpp
-target_include_directories(tests PRIVATE "E:/My Data/orders/fiv/7/library_management")
+target_include_directories(tests PRIVATE ".")
 
 # Link Catch2 to your test executable
 target_link_libraries(tests PRIVATE Catch2::Catch2)
