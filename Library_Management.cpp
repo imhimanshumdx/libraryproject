@@ -420,7 +420,7 @@ public:
                 }
                 catch (const std::exception &e)
                 {
-                    cout << "Error converting string to integer for BookType: " << e.what() << endl;
+              //      cout << "Error converting string to integer for BookType: " << e.what() << endl;
                 }
 
                 // Create a new Book object and add it to the library's collection
@@ -429,7 +429,7 @@ public:
             }
             else
             {
-                cout << "Error reading line from file: " << line << endl;
+            //    cout << "Error reading line from file: " << line << endl;
             }
         }
 
